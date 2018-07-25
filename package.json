@@ -1,0 +1,14 @@
+{
+  "name": "word2vec-loader-js",
+  "version": "1.0.0",
+  "description": "Small word2vec model",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "word2vec"
+  ],
+  "author": "antonio musolino",
+  "license": "ISC"
+}

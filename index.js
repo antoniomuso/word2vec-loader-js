@@ -156,12 +156,11 @@ function getSeparator(filePath) {
         default: return ' '
     }
 }
-
 /**
  * 
  * @param {String} filePath 
  * @param {boolean} header
- * @returns {Promise<Word2VecModel> | Promise<Error>} 
+ * @returns {Promise<Word2VecModel | Error>} 
  */
 function loadModel(filePath, header) {
     var model = new Word2VecModel()

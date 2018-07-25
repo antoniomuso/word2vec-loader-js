@@ -1,6 +1,6 @@
 {
   "name": "word2vec-loader-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Small word2vec model",
   "main": "index.js",
   "scripts": {

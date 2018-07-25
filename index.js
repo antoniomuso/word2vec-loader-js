@@ -246,6 +246,44 @@ class Word2VecModel {
         }
         return undefined
     }
+
+    /**
+     * 
+     * @param {String} word1 
+     * @param {String} word2 
+     * @returns {Number}
+     */
+    cosineSimilarityNormalizedVecs (word1, word2) {
+        var vec1 = this._map[word1]
+        var vec2 = this._map[word2]
+
+        if (vec1 && vec2) {
+            return cosineSimilarityNormalizedVecs(vec1, vec2)
+        }
+        return undefined
+    }
+
+    /**
+     * 
+     * @param {String} word
+     * @returns {Number} 
+     */
+    getMax(word) {
+        var vec = this._map[word]
+        if (vec) return getMax(vec)
+        return undefined
+    }
+
+    /**
+     * 
+     * @param {String} word
+     * @returns {Number} 
+     */
+    getMin(word) {
+        var vec = this._map[word]
+        if (vec) return getMin(vec)
+        return undefined
+    }
 }
 
 module.exports = {
@@ -253,5 +291,13 @@ module.exports = {
     vecMagnitude: vecMagnitude,
     vecDotProduct: vecDotProduct,
     loadModel: loadModel,
-    Word2VecModel: Word2VecModel
+    Word2VecModel: Word2VecModel,
+    sub:sub,
+    sum:sum,
+    cosineSimilarityNormalizedVecs: cosineSimilarityNormalizedVecs,
+    norm:norm,
+    normalize:normalize,
+    getMax:getMax,
+    getMin:getMin,
+    
 }

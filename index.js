@@ -2,7 +2,12 @@ const fs = require('fs')
 const rl = require('readline')
 const path = require('path')
 
-
+/**
+ * 
+ * @param {Array<Number>} vecA 
+ * @param {Array<Number>} vecB
+ * @returns {Number}  
+ */
 function vecDotProduct(vecA, vecB) {
 	var product = 0;
 	for (var i = 0; i < vecA.length; i++) {
@@ -14,6 +19,7 @@ function vecDotProduct(vecA, vecB) {
 /**
  * 
  * @param {Array<Number>} vec 
+ * @return {Number}
  */
 function vecMagnitude(vec) {
 	var sum = 0;
@@ -27,6 +33,7 @@ function vecMagnitude(vec) {
  * 
  * @param {Array<Number>} vecA 
  * @param {Array<Number>} vecB 
+ * @returns {Number}
  */
 function cosineSimilarity(vecA, vecB) {
 	return vecDotProduct(vecA, vecB) / (vecMagnitude(vecA) * vecMagnitude(vecB));
@@ -35,6 +42,7 @@ function cosineSimilarity(vecA, vecB) {
 /**
  * 
  * @param {String} filePath 
+ * @returns {String}
  */
 function getSeparator(filePath) {
     switch (path.extname(filePath)) {
@@ -96,6 +104,7 @@ class Word2VecModel {
      * 
      * @param {String} word 
      * @param {Array<Number>} vector 
+     * @returns {void}
      */
     addWord (word, vector) {
         this._map[word] = vector;
@@ -104,9 +113,10 @@ class Word2VecModel {
     /**
      * 
      * @param {String} word 
+     * @returns {void}
      */
     removeWord (word) {
-
+        delete this._map[word]
     }
 
     /**
@@ -120,6 +130,7 @@ class Word2VecModel {
      * 
      * @param {String} word1 
      * @param {String} word2 
+     * @returns {Number}
      */
     cosineSimilarity (word1, word2) {
         var vec1 = this._map[word1]

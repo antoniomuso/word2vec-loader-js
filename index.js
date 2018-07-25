@@ -161,7 +161,7 @@ function getSeparator(filePath) {
  * 
  * @param {String} filePath 
  * @param {boolean} header
- * @returns {Promise<Word2VecModel>} 
+ * @returns {Promise<Word2VecModel> | Promise<Error>} 
  */
 function loadModel(filePath, header) {
     var model = new Word2VecModel()
@@ -169,12 +169,21 @@ function loadModel(filePath, header) {
     return new Promise((resolve, reject) => {
         var start = header ? header : false
         var lineReander = rl.createInterface(fs.createReadStream(filePath))
+        var arr_len = null
+        var n_arr = null
         lineReander.on('line', (line) => {
             if (start) {
                 start = false
+                let arr = line.split(separator)
+                n_arr = parseInt(arr[0])
+                arr_len = parseInt(arr[1])
                 return
             }
             var arr = line.split(separator)
+            if (arr_len && arr_len !== (arr.length - 2)) {
+                reject(new Error('Vector length different from header'))
+            }
+
             model.addWord([arr[0]],
                 arr.slice(1, arr.length - 1)
                     .map((val) => parseFloat(val))
@@ -184,9 +193,9 @@ function loadModel(filePath, header) {
             resolve(model)
         })
 
-        lineReander.on('SIGCONT', () => reject('SIGCONT'))
-        lineReander.on('SIGINT', () => reject('SIGINT'))
-        lineReander.on('SIGTSTP', () => reject('SIGTSTP'))
+        lineReander.on('SIGCONT', () => reject(new Error('SIGCONT')))
+        lineReander.on('SIGINT', () => reject(new Error('SIGINT')))
+        lineReander.on('SIGTSTP', () => reject(new Error('SIGTSTP')))
 
     })
 }
@@ -253,7 +262,7 @@ class Word2VecModel {
      * @param {String} word2 
      * @returns {Number}
      */
-    cosineSimilarityNormalizedVecs (word1, word2) {
+    cosineSimilarityNormalizedVecs(word1, word2) {
         var vec1 = this._map[word1]
         var vec2 = this._map[word2]
 
@@ -292,12 +301,11 @@ module.exports = {
     vecDotProduct: vecDotProduct,
     loadModel: loadModel,
     Word2VecModel: Word2VecModel,
-    sub:sub,
-    sum:sum,
+    sub: sub,
+    sum: sum,
     cosineSimilarityNormalizedVecs: cosineSimilarityNormalizedVecs,
-    norm:norm,
-    normalize:normalize,
-    getMax:getMax,
-    getMin:getMin,
-    
+    norm: norm,
+    normalize: normalize,
+    getMax: getMax,
+    getMin: getMin,
 }

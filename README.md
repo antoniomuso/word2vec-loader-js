@@ -3,7 +3,7 @@
 ``` javascript
 const w2v = require ('word2vec-loader-js')
 w2v.loadModel('/home/user/word2vec.txt').then(model => {
-    console.log(model.cosineSimilarity('hello', ''bye))
+    console.log(model.cosineSimilarity('hello', 'bye'))
     console.log(model.getVectorOf('dance'))
 }).catch(err => {
     console.error(err)

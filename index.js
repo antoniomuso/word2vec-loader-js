@@ -183,7 +183,7 @@ function loadModel(filePath, header) {
                 reject(new Error('Vector length different from header'))
             }
 
-            model.addWord([arr[0]],
+            model.addWord(arr[0],
                 arr.slice(1, arr.length - 1)
                     .map((val) => parseFloat(val))
             )

@@ -292,6 +292,48 @@ class Word2VecModel {
         if (vec) return getMin(vec)
         return undefined
     }
+
+    /**
+     * Save model in a file
+     * 
+     * @param {String} path File path
+     * @param {Boolean} tsv Save file as Tab-separated values
+     * @param {Boolean} fileHeader Save file with header
+     * @returns {Promise<Error | undefined>} undefined if all has been writing otherwise error
+     */
+    saveModelTxt(path, tsv, fileHeader) {
+        var separator = tsv ? "\t" : " ";
+        var buff = fs.createWriteStream(path)
+        var words = this.getWords()
+
+        if (fileHeader) {
+            buff.write( words.length.toString() + separator + this._map[words[0]].length.toString() );
+            buff.write('\n')
+        }
+
+        for (let elem of words) {
+            buff.write(elem);
+            for (let double of this.getVectorOf(elem)) {
+                buff.write(separator + double.toString());
+            }
+            buff.write('\n');
+        }
+
+
+        return new Promise( (resolve, reject) => {
+
+            buff.on('error', (error) => {
+                reject(error)
+            })
+
+            buff.end(() => {
+                resolve()
+            })
+
+        })
+        
+    }
+
 }
 
 module.exports = {

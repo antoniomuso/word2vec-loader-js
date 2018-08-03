@@ -313,8 +313,9 @@ class Word2VecModel {
 
         for (let elem of words) {
             buff.write(elem);
+            buff.write(separator)
             for (let double of this.getVectorOf(elem)) {
-                buff.write(separator + double.toString());
+                buff.write(double.toString() + separator);
             }
             buff.write('\n');
         }
